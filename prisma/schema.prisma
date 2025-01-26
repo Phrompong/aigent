@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model hotel {
+  hid                              Int           @id
+  id                               String
+  address                          String?
+  name                             String? // Optional field
+  amenity_groups                   Json?
+  check_in_time                    String?
+  check_out_time                   String?
+  description_struct               Json?
+  images                           Json?
+  images_ext                       Json?
+  kind                             String?
+  latitude                         Float?
+  longitude                        Float?
+  phone                            String?
+  policy_struct                    Json?
+  postal_code                      String?
+  room_groups                      Json?
+  region                           Json?
+  star_rating                      Int?
+  email                            String?
+  serp_filters                     Json?
+  deleted                          Boolean?      @default(false)
+  is_closed                        Boolean?      @default(false)
+  is_gender_specification_required Boolean?      @default(false)
+  metapolicy_struct                Json?
+  metapolicy_extra_info            String?
+  star_certificate                 Json?
+  facts                            Json?
+  payment_methods                  Json?
+  hotel_chain                      String?
+  front_desk_time_start            String?
+  front_desk_time_end              String?
+  keys_pickup                      Json?
+  review_hotel                     review_hotel?
+}
+
+model review_hotel {
+  hid              Int   @id
+  rating           Int?
+  detailed_ratings Json?
+  reviews          Json?
+  hotel            hotel @relation(fields: [hid], references: [hid]) // Relation
+}
